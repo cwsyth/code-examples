@@ -41,18 +41,7 @@ def dfs_it(graph, root):
                 if neighbor not in visited:
                     stack.append(neighbor)
     return visited
-
-def dfs_it(graph, root):
-    stack = [root]
-    visited = []
-    while stack:
-        node = stack.pop()
-        if(node not in visited):
-            visited.append(node)
-            for neighbor in graph[node]:
-                if neighbor not in visited:
-                    stack.append(neighbor)
-    return visited
+    
 
 def bfs_it(graph, root):
     queue = [root]
