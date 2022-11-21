@@ -43,12 +43,17 @@ def dijkstra(graph, source):
     Returns the shortest distance to all nodes from source and the predecessor
     for each nodes on the shortest path.
     """
-    num_vert = len(graph) # länge graph
-    dist = [sys.maxsize] * num_vert # Erstelle Array mit Länge an Knoten, maxsize repräsentiert unendlich
-    prev = [None] * num_vert # speichern vom letzten besuchten Knoten
-    vset = set(range(num_vert)) # erstellt ein set von 0 bis Anzahl der Knoten - 1
-    dist[source] = 0 # belegt Startknoten mit 0
+    num_vert = len(graph) # Länge des Graphen
+    dist = [sys.maxsize] * num_vert # Erstelle Array, welches Knoten repräsentiert
+                                    # Eingetragen werden die Kosten zum jedem Knoten von einem Sourceknoten
+                                    # Alle Knoten werden mit maxsize intialisiert, was unedliche repräsentiert
+    prev = [None] * num_vert # Erstellt Array, welches Knoten repräsentiert
+                             # Hier werden die Vorgänger Knoten eingetragen den Knoten selber zugeordnet
+    vset = set(range(num_vert)) # Erstellt ein Set, welches Knoten repräsentiert
+                                # Besuchte Knoten werden aus der Liste entfernt
+    dist[source] = 0 # belegt Startknoten mit Kosten 0
 
+    # Funktion wird aus while Schleife heraus gerufen
     def min_distance():
         """ Return node with lowest distance in the set of remaining nodes."""
         min_dist = sys.maxsize
@@ -60,7 +65,7 @@ def dijkstra(graph, source):
         return min_v
 
     while vset:
-        u = min_distance()
+        u = min_distance() # Besuche Knoten mit geringsten Kosten
         if u == sys.maxsize:
             print("none of the remaining nodes reachable")
             return dist
