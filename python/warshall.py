@@ -14,6 +14,8 @@ names = ["A", "B", "C", "D", "E", "F"]
 def warshall(A):
     T = copy.deepcopy(A)
     n = len(A)
+    for i in range(len(T)):
+        T[i][i] = 1
 
     for k in range(n):
         for i in range(n):
