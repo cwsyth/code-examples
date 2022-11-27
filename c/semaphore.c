@@ -6,32 +6,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void init_sem(int *sem_id) {
-    if(semctl(*sem_id, 0, SETVAL, 1) < 0) {
+int sem_id;
+
+void init_sem(int sem_id) {
+    if(semctl(sem_id, 0, SETVAL, 1) < 0) {
         perror("semctl() error");
         exit(1);
     }
 }
 
-void P(int *sem_id) {
+void P(int sem_num) {
     struct sembuf semaphore;
-    semaphore.sem_num=0;
-    semaphore.sem_op=-1;
+    semaphore.sem_num= sem_num;
+    semaphore.sem_op= -1;
     semaphore.sem_flg=~(IPC_NOWAIT|SEM_UNDO);
 
-    if(semop(*sem_id, &semaphore, 1)){ 
+    if(semop(sem_id, &semaphore, 1)){ 
         ("semopP() error");
         exit(1);
     }
 }
 
-void V(int *sem_id) {
+void V(int sem_num) {
     struct sembuf semaphore;
-    semaphore.sem_num=0;
-    semaphore.sem_op=1;
+    semaphore.sem_num= sem_num;
+    semaphore.sem_op= 1;
     semaphore.sem_flg=~(IPC_NOWAIT|SEM_UNDO);
 
-    if(semop(*sem_id, &semaphore, 1)){ 
+    if(semop(sem_id, &semaphore, 1)){ 
         ("semopV() error");
         exit(1);
     }
@@ -54,7 +56,7 @@ int main() {
     }
 
     // init semaphor
-    init_sem(&sem_id);
+    init_sem(sem_id);
 
     for(int i = 0; i < 3; i++) {
         pid_t pid  = fork();
@@ -71,13 +73,13 @@ int main() {
 
             /* enter critical section */
             struct sembuf semaphore;
-            P(&sem_id);
+            P(0);
             printf("Prozess %d betritt kritischen Bereich", i);
             printf("\n");
             sleep(1);
             printf("Prozess %d verlässt kritischen Bereich", i);
             printf("\n");
-            V(&sem_id);
+            V(0);
             /* leave critical section */
             
             /* enter UNcritical section */
