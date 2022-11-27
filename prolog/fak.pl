@@ -5,6 +5,7 @@ fak(N, Res) :-
     Res is N * Res1.
 
 fak_rr(0, Z, Res) :- Res is Z.
+% fak_rr(0, Res, Res) :- !.
 fak_rr(N, Z, Res) :-
     N1 is N - 1,
     Z1 is Z * N,
