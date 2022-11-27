@@ -12,6 +12,6 @@ fib_rr(0, P1, _, Res) :- Res is P1.
 % fib_rr(0, Res, _, Res) :- !.
 fib_rr(N, P1, P2, Res) :-
     PN is P1 + P2,
-    NN is N-1,
+    NN is N - 1,
  	fib_rr(NN, PN, P1, Res).
 fib_h(N, Res) :- fib_rr(N, 1, 0, Res).
