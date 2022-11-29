@@ -7,7 +7,7 @@ has(K, [K|_]).
 has(K, [_|R]) :- has(K, R).
 
 delete(K, [K|Rest], Rest).
-delete(A, [B|Rest], [B, ARest]) :- delete(A, Rest, ARest).
+delete(A, [B|Rest], [B|ARest]) :- delete(A, Rest, ARest).
 
 insert(A, L, R) :- delete(A, R, L).
 
