@@ -11,4 +11,7 @@ delete(A, [B|Rest], [B, ARest]) :- delete(A, Rest, ARest).
 
 insert(A, L, R) :- delete(A, R, L).
 
-nelem(1, [K|_])
+nelem(1, [K|_], K).
+nelem(N, [_|Rest], E) :- 
+   N1 is N - 1,
+   nelem(N1, Rest, E).
