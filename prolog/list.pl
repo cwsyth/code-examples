@@ -17,8 +17,11 @@ copy([B|Rest], [B|ARest]) :- copy(R, ARest).
 delete(K, [K|Rest], Rest).
 delete(A, [B|Rest], [B|ARest]) :- delete(A, Rest, ARest).
 
-insert(A, L, R) :- delete(A, R, L).
+insert(A, L, R) :- delete(A, R, L).  % Aufruf geht in delete(K, [K|Rest], Rest). -> Unifikation mittlere Variable
    % R = [A|L]
+
+append([], L, L).
+append([A|Rest], L, [A|CRest]) :- append(Rest, L, CRest).
 
 nelem(1, [K|_], K).
 nelem(N, [_|Rest], E) :- 
