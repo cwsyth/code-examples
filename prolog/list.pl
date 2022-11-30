@@ -8,7 +8,7 @@ has(K, [_|R]) :- has(K, R).
 
 % recursive copy
 copy([], []).
-copy([B|Rest], [B|ARest]) :- copy(R, ARest).
+copy([B|Rest], [B|ARest]) :- copy(Rest, ARest).
 % alt: 
 % copy([B|R], L) :- 
    % L = [B|AR],
@@ -22,6 +22,13 @@ insert(A, L, R) :- delete(A, R, L).  % Aufruf geht in delete(K, [K|Rest], Rest).
 
 append([], L, L).
 append([A|Rest], L, [A|CRest]) :- append(Rest, L, CRest).
+
+reverse([], L, L).
+reverse([A|Rest], B, C) :- reverse(Rest, [A|B], C).
+reverse(A, B) :- reverse(A, [], B).x
+
+perm([], []).
+perm([A|Rest], L) :- delete(A, L, Z), perm(Rest, Z).
 
 nelem(1, [K|_], K).
 nelem(N, [_|Rest], E) :- 
