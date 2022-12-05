@@ -24,8 +24,8 @@ append([], L, L).
 append([A|Rest], L, [A|CRest]) :- append(Rest, L, CRest).
 
 reverse([], L, L).
-reverse([A|Rest], B, C) :- reverse(Rest, [A|B], C).
-reverse(A, B) :- reverse(A, [], B).x
+reverse([A|ARest], B, C) :- reverse(ARest, [A|B], C).
+reverse(A, B) :- reverse(A, [], B).
 
 perm([], []).
 perm([A|Rest], L) :- delete(A, L, Z), perm(Rest, Z).
