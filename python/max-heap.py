@@ -23,13 +23,13 @@ class MaxHeap:
     
 
     def swap(self, pos_a, pos_b):
-        self.heap[pos_a], self.heap[pos_b] = self.heap[pos_b], self.heap[pos_a] 
+        self.heap[pos_a], self.heap[pos_b] = (self.heap[pos_b], self.heap[pos_a])
 
 
     def upheap(self, pos):
         current = pos
-        while self.heap[current] > self.heap[self.parent(current)]: # update parent
-            self.swap(self.parent(current), current)
+        while self.heap[current] > self.heap[self.parent(current)]:
+            self.swap(current, self.parent(current))
             current = self.parent(current)
 
 
