@@ -44,6 +44,7 @@ class BinaryTree:
                 self.right.print(order)
             print(f"{self.key}", end="-")
 
+        # recursive version
         if order == Order.LEVEL:
             if level == 1:
                 print(f"{self.key}", end="-")

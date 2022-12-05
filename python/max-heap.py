@@ -49,13 +49,18 @@ class MaxHeap:
 
             if key < left_key or key < right_key:
                 if left_key < right_key:
+                    # swap with the right child and heapify the right child
                     self.swap(pos, right_pos)
                     self.downheap(right_pos)
                 else:
-                    self.swap(pos, left_key)
+                    # swap with the left child and heapify the left child
+                    self.swap(pos, left_pos)
                     self.downheap(left_pos)
 
+
     def insert(self, key):
+        if self.size >= self.maxsize:
+            return
         self.size += 1
         self.heap[self.size] = key
         self.upheap(self.size)
