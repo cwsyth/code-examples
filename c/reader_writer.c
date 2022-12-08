@@ -137,9 +137,7 @@ int main() {
         }
     }
 
-    wait(NULL);
-    wait(NULL);
-    wait(NULL);
+    sleep(10);
     printf("Father");
     printf("\n");
     exit(0);
