@@ -1,3 +1,5 @@
+import pydot
+
 from enum import Enum
 
 
@@ -13,14 +15,6 @@ class BinaryTree:
         self.key = key
         self.right = None
         self.left = None
-
-    def height(self, root):
-        if root is None:
-            return 0
-        else:
-            height_left = self.height(root.left)
-            height_right = self.height(root.right)
-            return max(height_left + 1, height_right + 1)
 
     def print(self, order):
         if order == Order.PRE:
@@ -71,11 +65,29 @@ class BinaryTree:
         self.print(order)
         print('')
 
+    
+    def write_graph(self, name):
+        graph = pydot.Dot(graph_type='graph')
+
+        def traverse(node):
+            if node:
+                graph.add_node(pydot.Node(node.key))
+                if node.left:
+                    graph.add_edge(pydot.Edge(node.key, node.left.key))
+                    traverse(node.left)
+                if node.right:
+                    graph.add_edge(pydot.Edge(node.key, node.right.key))
+                    traverse(node.right)
+
+        traverse(self)
+        graph.write_pdf(name)    
+
 
 
 class BinarySearchTree(BinaryTree):
-    def __init__(self, key):
-        BinaryTree.__init__(self, key)
+    # __init__ gets inherited from BinaryTree
+    #def __init__(self, key):
+    #    BinaryTree.__init__(self, key)
     
 
     def insert(self, key):
@@ -98,26 +110,31 @@ class BinarySearchTree(BinaryTree):
         if self == None:
             return self
 
+        # recursively rebuild the tree, descending to the left or right subtree
         if key < self.key:
             self.left = self.left.delete(key)
+            return self
         elif key > self.key:
-            self.rigth = self.right.delete(key)
-        else: # key == self.key
+            self.right = self.right.delete(key)
+            return self
+        else: # key == self.key:
             if self.left == None:
+                # delete node with 0 or 1 child
                 return self.right
             elif self.right == None:
+                # delete node with 1 child
                 return self.left
             else:
-                # inorder successor
+                # delete node with 2 children
+                # replace the node with its inorder successor
                 successor = self.right
                 while successor.left:
                     successor = successor.left
-                
+
                 self.key = successor.key
                 self.right = self.right.delete(successor.key)
                 return self
         
-
 
 tree = BinarySearchTree("d")
 tree.insert("f")
@@ -131,7 +148,6 @@ tree.insert("g")
 tree.pretty_print(Order.PRE)
 tree.delete("f")
 tree.pretty_print(Order.PRE)
-
 
 
 a = BinaryTree("a")
