@@ -10,6 +10,7 @@ d(-U, X, -DU) :- d(U, X, DU).
 d(sin(U),X,cos(U)*DU) :- d(U,X,DU).
 d(cos(U),X,-sin(U)*DU) :- d(U,X,DU).
 
+# Zerlegung der Terme in kleinere Teile
 simplify(X+Y,Erg) :-   
 				simplify(X,Z1), 
 		    	simplify(Y,Z2),
@@ -31,10 +32,12 @@ simplify(X*Y,Erg) :-
 simplify(A*(B*C^D), Z*C^D) :- number(A), number(B), Z is A * B.
 simplify(A*(B*C), Z*C) :- number(A), number(B), Z is A * B.
 
+# nur für x relevant
 simplify(X,X) :- atomic(X), !.
 simplify(X^1,X) :- !. 
 simplify(X^N,X^N) :- !. 
 
+# nur für konstante Zahle relevant
 simplify(A*B,X) :- number(A), number(B), X is A*B.
 simplify(A+B,X) :- number(A), number(B), X is A+B.
 simplify(A-B,X) :- number(A), number(B), X is A-B.
@@ -43,6 +46,7 @@ simplify(A*(B*C), R) :- simplify(A*B*C, R).
 simplify((A),A) :- atomic(A).
 simplify((B*C)*A, B*C*A).
 
+# nur für x relevant
 simplify(0*_,0) :- !.
 simplify(1*X,X) :- !.
 simplify(_*0,0) :- !.
