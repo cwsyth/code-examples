@@ -10,20 +10,23 @@ d(-U, X, -DU) :- d(U, X, DU).
 d(sin(U),X,cos(U)*DU) :- d(U,X,DU).
 d(cos(U),X,-sin(U)*DU) :- d(U,X,DU).
 
-simplify(X+Y,Erg) :-   simplify(X,Z1), 
-		       simplify(Y,Z2),
-		       (not(X=Z1); not(Y=Z2)), 
-		       simplify(Z1+Z2, Erg).
+simplify(X+Y,Erg) :-   
+				simplify(X,Z1), 
+		    	simplify(Y,Z2),
+		    	(not(X=Z1); not(Y=Z2)), 
+		    	simplify(Z1+Z2, Erg).
 
-simplify(X-Y,Erg) :-   simplify(X,Z1), 
-		       simplify(Y,Z2),
-		       (not(X=Z1); not(Y=Z2)), 
-		       simplify(Z1-Z2, Erg).
+simplify(X-Y,Erg) :-   
+				simplify(X,Z1), 
+		    	simplify(Y,Z2),
+		    	(not(X=Z1); not(Y=Z2)), 
+		    	simplify(Z1-Z2, Erg).
 
-simplify(X*Y,Erg) :-   simplify(X,Z1), 
-		       simplify(Y,Z2),
-		       (not(X=Z1); not(Y=Z2)), 
-		       simplify(Z1*Z2, Erg).
+simplify(X*Y,Erg) :-   
+				simplify(X,Z1), 
+		    	simplify(Y,Z2),
+		    	(not(X=Z1); not(Y=Z2)), 
+		    	simplify(Z1*Z2, Erg).
 
 simplify(A*(B*C^D), Z*C^D) :- number(A), number(B), Z is A * B.
 simplify(A*(B*C), Z*C) :- number(A), number(B), Z is A * B.
@@ -36,7 +39,7 @@ simplify(A*B,X) :- number(A), number(B), X is A*B.
 simplify(A+B,X) :- number(A), number(B), X is A+B.
 simplify(A-B,X) :- number(A), number(B), X is A-B.
 simplify(X*N, N*X) :- number(N), not(number(X)).
-simplify(A*(B*C), R) :- simplify(A*B*C, R)  .
+simplify(A*(B*C), R) :- simplify(A*B*C, R).
 simplify((A),A) :- atomic(A).
 simplify((B*C)*A, B*C*A).
 
