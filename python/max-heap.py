@@ -1,4 +1,5 @@
 import sys
+import pydot
 
 
 class MaxHeap:
@@ -73,8 +74,29 @@ class MaxHeap:
         self.downheap(self.ROOT)
         return max_val
 
+    
+        def write_graph(self, name):
+        graph = pydot.Dot(graph_type='graph')
 
-heap = MaxHeap(33)
+        def traverse(pos):
+            if pos <= self.size:
+                graph.add_node(pydot.Node(self.heap[pos]))
+                left = self.left_child(pos)
+                right = self.right_child(pos)
+                if left <= self.size:
+                    graph.add_node(pydot.Node(self.heap[left]))
+                    graph.add_edge(pydot.Edge(self.heap[pos], self.heap[left]))
+                    traverse(left)
+                if right <= self.size:
+                    graph.add_node(pydot.Node(self.heap[right]))
+                    graph.add_edge(pydot.Edge(self.heap[pos], self.heap[right]))
+                    traverse(right)
+
+        traverse(self.ROOT)
+        graph.write_pdf(name + '.pdf')
+
+
+heap = MaxHeap(42)
 heap.insert(4)
 heap.insert(1)
 heap.insert(5)
@@ -82,6 +104,13 @@ heap.insert(10)
 heap.insert(7)
 heap.insert(8)
 heap.insert(3)
-print(heap.heap)
+print(heap)
 heap.extract()
-print(heap.heap)
+print(heap)
+
+
+heap.write_graph('maxheap_1')
+print(f"extracted max value: {heap.extract()}")
+heap.write_graph('maxheap_2')
+print(f"extracted max value: {heap.extract()}")
+heap.write_graph('maxheap_3')
