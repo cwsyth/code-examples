@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     numbers.a = num1;
     numbers.b = num2;
 
-    CLIENT* cl = clnt_create("localhost", MATHPROG, MATHVERS, "tcp");
+    CLIENT* cl = clnt_create(servername, MATHPROG, MATHVERS, "tcp");
     if(cl == (CLIENT *)NULL) {
         printf("error");
         exit(1);
