@@ -1,31 +1,29 @@
-len([], 0).
-len([_|R], Res) :-
-   len(R, Res1),
-   Res is Res1 + 1.
+mylen([], 0).
+mylen([_|R], Res) :-
+	mylen(R, Res1),
+	Res is Res1+1.
    
-has(K, [K|_]).
-has(K, [_|R]) :- has(K, R).
+myhas([H|_], H).
+myhas([_|R], E) :-
+    myhas(R, E).
 
-% recursive copy
-copy([], []).
-copy([B|Rest], [B|ARest]) :- copy(Rest, ARest).
-% alt: 
-% copy([B|R], L) :- 
-   % L = [B|AR],
-   % copy(R, AR).
+mycopy([], []).
+mycopy([H|R1], [H|R2]) :-
+    mycopy(R1, R2).
 
-delete(K, [K|Rest], Rest).
-delete(A, [B|Rest], [B|ARest]) :- delete(A, Rest, ARest).
+mydelete(E, [E|R], R).
+mydelete(E, [H|R1], [H|R2]) :- mydelete(E, R1, R2).
 
-insert(A, L, R) :- delete(A, R, L).  % Aufruf geht in delete(K, [K|Rest], Rest). -> Unifikation mittlere Variable
-   % R = [A|L]
+myinsert(E, L, Res) :- Res = [E|L].
+% myinsert(E, L, Res) :- mydelete(E, Res, L).
 
-append([], L, L).
-append([A|Rest], L, [A|CRest]) :- append(Rest, L, CRest).
+myappend(E, [], E).
+myappend(E, [H|R1], [H|R2]) :-
+    myappend(E, R1, R2).
 
-reverse([], L, L).
-reverse([A|ARest], B, C) :- reverse(ARest, [A|B], C).
-reverse(A, B) :- reverse(A, [], B).
+reverse([], T, T).
+reverse([H|R1], T, Res) :- reverse(R1, [H|T], Res).
+reverse(L, Res) :- reverse(L, [], Res).
 
 perm([], []).
 perm([A|Rest], L) :- delete(A, L, Z), perm(Rest, Z).
